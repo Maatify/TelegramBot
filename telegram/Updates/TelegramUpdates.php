@@ -66,7 +66,7 @@ class TelegramUpdates
                 $this->updates = $updates['result'];
                 return;
             }else{
-                Logger::RecordLog($updates);
+                Logger::RecordLog($updates, 'telegram_failed');
                 @throw new Exception('result not ok');
             }
         }

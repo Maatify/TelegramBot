@@ -121,7 +121,7 @@ class Request
                     'success' => $resultArray,
                     'params' => $this->params,
                     'url' => $this->url
-                ]);
+                ], 'success');
                 return $resultArray;
             } else {
                 Logger::RecordLog([

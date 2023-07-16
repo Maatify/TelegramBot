@@ -59,7 +59,7 @@ class TelegramChat
                 $this->getter = $chat['result'];
                 return $this;
             }else{
-                Logger::RecordLog($chat);
+                Logger::RecordLog($chat, 'telegram_failed');
                 @throw new Exception('result not ok');
             }
         }
