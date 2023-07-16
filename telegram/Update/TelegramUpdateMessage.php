@@ -46,9 +46,11 @@ class TelegramUpdateMessage
 
     public function Get(string $key = '')
     {
-        if(!empty($this->message[$key])){
+        if(empty($key)){
+            return $this->message;
+        }elseif (!empty($this->message[$key])){
             return $this->message[$key];
         }
-        return $this->message;
+        return '';
     }
 }

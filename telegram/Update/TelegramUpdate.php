@@ -27,21 +27,22 @@ namespace Maatify\TelegramBot\Update;
 
 class TelegramUpdate extends TelegramUpdateGetter
 {
+    use TelegramUpdateTrait;
     private static self $instance;
-
-    private int $update_id;
+    protected int $update_id;
     public TelegramUpdateMessage $message;
     public TelegramUpdateFrom $from;
     public TelegramUpdateChat $chat;
-    private string $text;
-    private int $date;
+    protected string $text;
+    protected int $date;
+    protected TelegramUpdateReplyToMessage $reply_to_message;
+    private TelegramUpdateForward $forward_from_message;
 
     public static function obj(array $update): self
     {
         if (empty(self::$instance)) {
             self::$instance = new self($update);
         }
-
         return self::$instance;
     }
     public function __construct(array $update)
@@ -53,6 +54,12 @@ class TelegramUpdate extends TelegramUpdateGetter
         $this->chat = TelegramUpdateChat::obj($this->message->Get('chat'));
         $this->text = $this->message->Get('text');
         $this->date = $this->message->Get('date');
+        if(empty($this->reply_to_message)) {
+            $this->reply_to_message = TelegramUpdateReplyToMessage::obj($this->message->Get('reply_to_message') ?: []);
+        }
+        if(empty($this->forward_from_message)){
+            $this->forward_from_message = TelegramUpdateForward::obj($this->message->Get()? : []);
+        }
 
     }
 
@@ -75,33 +82,13 @@ class TelegramUpdate extends TelegramUpdateGetter
         return $this->update_id;
     }
 
-    public function From(): TelegramUpdateFrom
+    public function ReplyToMessage(): TelegramUpdateReplyToMessage
     {
-        return $this->from;
+        return $this->reply_to_message;
     }
 
-    public function GetFrom()
+    public function ForwardFromMessage(): TelegramUpdateForward
     {
-        return $this->from->Get();
-    }
-
-    public function Chat(): TelegramUpdateChat
-    {
-        return $this->chat;
-    }
-
-    public function GetChat()
-    {
-        return $this->chat->Get();
-    }
-
-    public function GetText()
-    {
-        return $this->text;
-    }
-
-    public function GetDate()
-    {
-        return $this->date;
+        return $this->forward_from_message;
     }
 }
