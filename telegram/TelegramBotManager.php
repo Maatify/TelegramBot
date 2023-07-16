@@ -136,4 +136,9 @@ class TelegramBotManager
         return $this->webhook;
     }
 
+    public function SpecialPost(string $method, array $params)
+    {
+        return $this->telegram->CurlPost($method, $params);
+    }
+
 }
