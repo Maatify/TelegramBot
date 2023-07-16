@@ -1,3 +1,11 @@
+[![Current version](https://img.shields.io/packagist/v/maatify/telegram-bot)][pkg]
+[![Packagist PHP Version Support](https://img.shields.io/packagist/php-v/maatify/telegram-bot)][pkg]
+[![Monthly Downloads](https://img.shields.io/packagist/dm/maatify/telegram-bot)][pkg-stats]
+[![Total Downloads](https://img.shields.io/packagist/dt/maatify/telegram-bot)][pkg-stats]
+[![Stars](https://img.shields.io/packagist/stars/maatify/telegram-bot)](https://github.com/maatify/telegram-bot/stargazers)
+
+[pkg]: <https://packagist.org/packages/maatify/telegram-bot>
+[pkg-stats]: <https://packagist.org/packages/maatify/telegram-bot/stats>
 
 # Installation
 

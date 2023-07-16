@@ -62,7 +62,7 @@ class TelegramUpdate extends TelegramUpdateGetter
             $this->forward_from_message = TelegramUpdateForward::obj($this->message->Get()? : []);
         }
         if(empty($this->contact)) {
-            $this->contact = TelegramUpdateGetContact::obj($this->message->Get('contact'));
+            $this->contact = TelegramUpdateGetContact::obj($this->message->Get('contact')?:[]);
         }
 
     }

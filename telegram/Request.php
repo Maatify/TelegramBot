@@ -9,7 +9,7 @@
 
 /**
  * @PHP Version >= 8.0
- * @Project   TelegramBot
+ * @Liberary   TelegramBot
  * @see https://www.maatify.dev Visit Maatify.dev
  * @link https://github.com/Maatify/TelegramBot View project on GitHub
  *
