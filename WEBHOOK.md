@@ -94,4 +94,11 @@ $forward_from_chat_message_id   = $forward_from_message_obj->GetForwardFromMessa
 $forward_from_chat_signature    = $forward_from_message_obj->GetForwardSignature();     // Get chat signature from forward_from_message of message (string)
 $forward_from_chat_date         = $forward_from_message_obj->GetForwardFromDate();      // Get chat date from forward_from_message of message (int)
 
+// ================== return info (contact) of message ==================
+$contact_obj            = $update->Contact();
+$contact                = $contact_obj->Get();          // Get contact info from contact of message (array)
+$contact_phone_number   = $contact_obj->PhoneNumber();  // Get contact phone_number from contact of message (string)
+$contact_first_name     = $contact_obj->FirstName();    // Get contact first_name from contact of message (string)
+$contact_last_name      = $contact_obj->LastName();     // Get contact last_name from contact of message (string)
+$contact_user_id        = $contact_obj->UserId();       // Get contact user_id from contact of message (string)
 ```

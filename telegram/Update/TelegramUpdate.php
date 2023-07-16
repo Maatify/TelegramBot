@@ -37,6 +37,7 @@ class TelegramUpdate extends TelegramUpdateGetter
     protected int $date;
     protected TelegramUpdateReplyToMessage $reply_to_message;
     private TelegramUpdateForward $forward_from_message;
+    private TelegramUpdateGetContact $contact;
 
     public static function obj(array $update): self
     {
@@ -59,6 +60,9 @@ class TelegramUpdate extends TelegramUpdateGetter
         }
         if(empty($this->forward_from_message)){
             $this->forward_from_message = TelegramUpdateForward::obj($this->message->Get()? : []);
+        }
+        if(empty($this->contact)) {
+            $this->contact = TelegramUpdateGetContact::obj($this->message->Get('contact'));
         }
 
     }
@@ -90,5 +94,10 @@ class TelegramUpdate extends TelegramUpdateGetter
     public function ForwardFromMessage(): TelegramUpdateForward
     {
         return $this->forward_from_message;
+    }
+
+    public function Contact(): TelegramUpdateGetContact
+    {
+        return $this->contact;
     }
 }

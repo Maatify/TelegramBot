@@ -3,6 +3,7 @@
 ### Create login.php Page
 
 ```php
+<?php
 function getTelegramUserData() {
     if (isset($_COOKIE['tg_user'])) {
         $auth_data_json = urldecode($_COOKIE['tg_user']);
@@ -55,6 +56,7 @@ HTML;
 ### Create check_authorization.php Page
 
 ```php
+<?php
 **
  * @throws Exception
  */
@@ -77,7 +79,7 @@ function checkTelegramAuthorization($auth_data) {
     }
     if(!empty($auth_data['id'])){
         $chat_id = $auth_data['id'];
-        // you can send message to user here
+        // you can send Welcome message to user here
     }
     return $auth_data;
 }
