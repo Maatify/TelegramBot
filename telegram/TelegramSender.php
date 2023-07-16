@@ -8,14 +8,14 @@
  */
 
 /**
- * @PHP Version >= 8.0
+ * @PHP         Version >= 8.0
  * @Liberary    TelegramBot
- * @see https://www.maatify.dev Visit Maatify.dev
- * @link https://github.com/Maatify/TelegramBot View project on GitHub
+ * @see         https://www.maatify.dev Visit Maatify.dev
+ * @link        https://github.com/Maatify/TelegramBot View project on GitHub
  *
- * @author    Mohamed Abdulalim (megyptm) <mohamed@maatify.dev>
- * @copyright ©2023 Maatify.dev
- * @note    This Project using for Call Telegram API
+ * @author      Mohamed Abdulalim (megyptm) <mohamed@maatify.dev>
+ * @copyright   ©2023 Maatify.dev
+ * @note        This Project using for Call Telegram API
  *
  * This program is distributed in the hope that it will be useful - WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
@@ -26,6 +26,7 @@
 namespace Maatify\TelegramBot;
 
 use CURLFile;
+use Maatify\TelegramBot\InlineKeyboard\TelegramInlineKeyboardMarkup;
 
 class TelegramSender
 {
@@ -55,6 +56,22 @@ class TelegramSender
                 'chat_id'             => $chat_id,
                 'text'                => $message,
                 'reply_to_message_id' => $reply_to_message_id,
+            ]
+        );
+    }
+
+    public function SendMessageWithKeyboardMarkup(int $chat_id, string $message, int $reply_to_message_id = 0, array $keyboard = [])
+    {
+        if (! empty($keyboard)) {
+            $keyboard = TelegramInlineKeyboardMarkup::obj()->createInlineKeyboard($keyboard);
+        }
+
+        return $this->telegram->CurlPost('sendMessage',
+            [
+                'chat_id'             => $chat_id,
+                'text'                => $message,
+                'reply_to_message_id' => $reply_to_message_id,
+                'reply_markup'        => $keyboard,
             ]
         );
     }
