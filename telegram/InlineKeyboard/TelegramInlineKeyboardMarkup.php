@@ -44,7 +44,7 @@ class TelegramInlineKeyboardMarkup
      *
      * @return string JSON-encoded string representing the inline keyboard markup
      */
-    public function createInlineKeyboard(array $buttons): array
+    public function createInlineKeyboard(array $buttons): string
     {
         $keyboard = [];
         foreach ($buttons as $row) {
@@ -59,7 +59,6 @@ class TelegramInlineKeyboardMarkup
         }
 
         return json_encode(['inline_keyboard' => $keyboard]);
-//        return $keyboard;
     }
 
     /**
