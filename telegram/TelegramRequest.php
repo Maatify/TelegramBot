@@ -1,21 +1,15 @@
 <?php
 /**
- * Created by Maatify.dev
- * User: Maatify.dev
- * Date: 2023-07-14
- * Time: 3:35 PM
- * https://www.Maatify.dev
- */
-
-/**
- * @PHP Version >= 8.0
- * @Liberary   TelegramBot
- * @see https://www.maatify.dev Visit Maatify.dev
- * @link https://github.com/Maatify/TelegramBot View project on GitHub
- *
+ * @PHP       Version >= 8.0
+ * @Liberary  TelegramBot
+ * @Project   TelegramBot
+ * @copyright ©2024 Maatify.dev
+ * @see       https://www.maatify.dev Visit Maatify.dev
+ * @link      https://github.com/Maatify/TelegramBot View project on GitHub
+ * @since     2023-07-14 3:35 PM
  * @author    Mohamed Abdulalim (megyptm) <mohamed@maatify.dev>
- * @copyright ©2023 Maatify.dev
- * @note    This Project using for Call Telegram API
+ * @Maatify   TelegramBot :: TelegramRequest
+ * @note      This Project using for Call Telegram API
  *
  * This program is distributed in the hope that it will be useful - WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
@@ -26,9 +20,10 @@
 namespace Maatify\TelegramBot;
 
 use CurlHandle;
+use Maatify\Functions\GeneralFunctions;
 use Maatify\Logger\Logger;
 
-class Request
+class TelegramRequest
 {
     private static self $instance;
 
@@ -114,21 +109,21 @@ class Request
                 'error' => "(err-" . __METHOD__ . ") cURL Error ($curl_errno): $curl_error",
                 'params' => $this->params,
                 'url' => $this->url
-            ], 'telegram_failed');
+            ], 'telegram_failed_' . GeneralFunctions::CurrentMicroTimeStamp());
         } else {
             if ($resultArray = json_decode($result, true)) {
                 Logger::RecordLog([
                     'success' => $resultArray,
                     'params' => $this->params,
                     'url' => $this->url
-                ], 'success');
+                ], 'success_' . GeneralFunctions::CurrentMicroTimeStamp());
                 return $resultArray;
             } else {
                 Logger::RecordLog([
                     'error' => ($httpCode != 200) ? "Error header response " . $httpCode : "There is no response from server (err-" . __METHOD__ . ")",
                     'params' => $this->params,
                     'url' => $this->url
-                ], 'telegram_failed');
+                ], 'telegram_failed_' . GeneralFunctions::CurrentMicroTimeStamp());
             }
         }
         return [];

@@ -6,9 +6,9 @@
  * @copyright ©2024 Maatify.dev
  * @see       https://www.maatify.dev Visit Maatify.dev
  * @link      https://github.com/Maatify/TelegramBot View project on GitHub
- * @since     2023-07-16 7:06 AM
+ * @since     2024-07-29 3:01 AM
  * @author    Mohamed Abdulalim (megyptm) <mohamed@maatify.dev>
- * @Maatify   TelegramBot :: WebhookUpdate
+ * @Maatify   TelegramBot :: Webhook
  * @note      This Project using for Call Telegram API
  *
  * This program is distributed in the hope that it will be useful - WITHOUT
@@ -18,25 +18,24 @@
  */
 
 namespace Maatify\TelegramBot\Webhook;
-
-use Maatify\TelegramBot\Update\TelegramUpdate;
-
-class WebhookUpdate
+abstract class Webhook
 {
-    private TelegramUpdate $update;
+    protected array $payload;
+    protected array $headers;
+    protected string $api_key;
 
-    public function __construct()
+    public function __construct(array $payload, array $headers, string $api_key)
     {
-        if(empty($_POST)){
-            $response = file_get_contents('php://input');
-            $response = json_decode($response, true);
-            $_POST = json_decode(json_encode($response), true);
-        }
-        $this->update = TelegramUpdate::obj($_POST);
+        $this->payload = $payload;
+        $this->headers = $headers;
+        $this->api_key = $api_key;
     }
 
-    public function Update(): TelegramUpdate
+    abstract public function process();
+
+    protected function validate(): bool
     {
-        return $this->update;
+        // Implement validation logic
+        return true;
     }
 }

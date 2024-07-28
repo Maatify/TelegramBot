@@ -6,9 +6,9 @@
  * @copyright ©2024 Maatify.dev
  * @see       https://www.maatify.dev Visit Maatify.dev
  * @link      https://github.com/Maatify/TelegramBot View project on GitHub
- * @since     2023-07-16 5:51 AM
+ * @since     2023-07-16 5:52 AM
  * @author    Mohamed Abdulalim (megyptm) <mohamed@maatify.dev>
- * @Maatify   TelegramBot :: SetWebhook
+ * @Maatify   TelegramBot :: TelegramWebhookOptions
  * @note      This Project using for Call Telegram API
  *
  * This program is distributed in the hope that it will be useful - WITHOUT
@@ -21,14 +21,12 @@ namespace Maatify\TelegramBot\Webhook;
 
 use Maatify\TelegramBot\TelegramRequest;
 
-class SetWebhook
+class TelegramWebhookOptions
 {
     private static self $instance;
-    private int $max_connections;
-    private string $ip;
-    private string $secret_token;
-
     private TelegramRequest $telegram;
+
+    private SetWebhook $setWebhookOptions;
     public static function obj(TelegramRequest $telegram): self
     {
         if (empty(self::$instance)) {
@@ -41,38 +39,27 @@ class SetWebhook
     public function __construct(TelegramRequest $telegram)
     {
         $this->telegram = $telegram;
+        $this->setWebhookOptions = SetWebhook::obj($telegram);
     }
 
-    public function SetIp(string $ip): static
+    public function OptionsSetter(): SetWebhook
     {
-        $this->ip = $ip;
-        return $this;
-    }
-
-    public function SetMaxConnections(int $max_connections): static
-    {
-        $this->max_connections = $max_connections;
-        return $this;
-    }
-
-    public function SetSecretToken(string $secret_token): static
-    {
-        $this->secret_token = $secret_token;
-        return $this;
+        return $this->setWebhookOptions;
     }
 
     public function SetWebhook(string $url)
     {
-        $params['url'] = $url;
-        if(!empty($this->ip)){
-            $params['ip'] = $this->ip;
-        }
-        if(!empty($this->max_connections)){
-            $params['max_connections'] = $this->max_connections;
-        }
-        if(!empty($this->secret_token)){
-            $params['secret_token'] = $this->secret_token;
-        }
-        return $this->telegram->CurlPost('setWebhook', $params);
+        return $this->setWebhookOptions->SetWebhook($url);
     }
+
+    public function WebhookInfo()
+    {
+        return $this->telegram->CurlGet('getWebhookInfo');
+    }
+
+    public function DeleteWebhook()
+    {
+        return $this->telegram->CurlGet('deleteWebhook');
+    }
+
 }

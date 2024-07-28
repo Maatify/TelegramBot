@@ -6,9 +6,9 @@
  * @copyright ©2024 Maatify.dev
  * @see       https://www.maatify.dev Visit Maatify.dev
  * @link      https://github.com/Maatify/TelegramBot View project on GitHub
- * @since     2023-07-15 10:22 AM
+ * @since     2024-07-29 3:04 AM
  * @author    Mohamed Abdulalim (megyptm) <mohamed@maatify.dev>
- * @Maatify   TelegramBot :: TelegramUpdateGetter
+ * @Maatify   TelegramBot :: TelegramWebhookChat
  * @note      This Project using for Call Telegram API
  *
  * This program is distributed in the hope that it will be useful - WITHOUT
@@ -17,34 +17,18 @@
  *
  */
 
-namespace Maatify\TelegramBot\Update;
+namespace Maatify\TelegramBot\Webhook;
 
-class TelegramUpdateGetter
+class TelegramWebhookChat
 {
     private static self $instance;
-    private mixed $getter;
 
-    public static function obj(array $getter): self
+    public static function obj(): self
     {
         if (empty(self::$instance)) {
-            self::$instance = new self($getter);
+            self::$instance = new self();
         }
 
         return self::$instance;
-    }
-
-    public function __construct($getter)
-    {
-        $this->getter = $getter;
-    }
-
-    public function Get(string $key = '')
-    {
-        if(empty($key)){
-            return $this->getter;
-        }else{
-            return $this->getter[$key] ?? '';
-        }
-
     }
 }

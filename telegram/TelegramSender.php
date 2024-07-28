@@ -1,21 +1,15 @@
 <?php
 /**
- * Created by Maatify.dev
- * User: Maatify.dev
- * Date: 2023-07-16
- * Time: 9:55 AM
- * https://www.Maatify.dev
- */
-
-/**
- * @PHP         Version >= 8.0
- * @Liberary    TelegramBot
- * @see         https://www.maatify.dev Visit Maatify.dev
- * @link        https://github.com/Maatify/TelegramBot View project on GitHub
- *
- * @author      Mohamed Abdulalim (megyptm) <mohamed@maatify.dev>
- * @copyright   ©2023 Maatify.dev
- * @note        This Project using for Call Telegram API
+ * @PHP       Version >= 8.0
+ * @Liberary  TelegramBot
+ * @Project   TelegramBot
+ * @copyright ©2024 Maatify.dev
+ * @see       https://www.maatify.dev Visit Maatify.dev
+ * @link      https://github.com/Maatify/TelegramBot View project on GitHub
+ * @since     2023-07-16 9:55 AM
+ * @author    Mohamed Abdulalim (megyptm) <mohamed@maatify.dev>
+ * @Maatify   TelegramBot :: TelegramSender
+ * @note      This Project using for Call Telegram API
  *
  * This program is distributed in the hope that it will be useful - WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
@@ -32,9 +26,9 @@ class TelegramSender
 {
     private static self $instance;
     private TelegramSendAction $action;
-    private Request $telegram;
+    private TelegramRequest $telegram;
 
-    public static function obj(Request $telegram): self
+    public static function obj(TelegramRequest $telegram): self
     {
         if (empty(self::$instance)) {
             self::$instance = new self($telegram);
@@ -43,20 +37,39 @@ class TelegramSender
         return self::$instance;
     }
 
-    public function __construct(Request $telegram)
+    public function __construct(TelegramRequest $telegram)
     {
         $this->telegram = $telegram;
         $this->action = TelegramSendAction::obj($telegram);
     }
 
-    public function SendMessage(int $chat_id, string $message, int $reply_to_message_id = 0)
+    public function SendMessage(int $chat_id, string $text, int $reply_to_message_id = 0, array $keyboard = [])
     {
+        $to_send['chat_id'] = $chat_id;
+        $to_send['text'] = $text;
+        if(!empty($reply_to_message_id)) {
+            $to_send['reply_to_message_id'] = $reply_to_message_id;
+        }
+        if(!empty($keyboard)) {
+            $to_send['reply_markup'] = TelegramInlineKeyboardMarkup::obj()->createInlineKeyboard($keyboard);
+        }
+
         return $this->telegram->CurlPost('sendMessage',
-            [
-                'chat_id'             => $chat_id,
-                'text'                => $message,
-                'reply_to_message_id' => $reply_to_message_id,
-            ]
+            $to_send
+        );
+    }
+    public function editMessageReplyMarkup(int $chat_id, int $reply_to_message_id = 0, array $keyboard = [])
+    {
+        $to_send['chat_id'] = $chat_id;
+        if(!empty($reply_to_message_id)) {
+            $to_send['message_id'] = $reply_to_message_id;
+        }
+        if(!empty($keyboard)) {
+            $to_send['reply_markup'] = TelegramInlineKeyboardMarkup::obj()->createInlineKeyboard($keyboard);
+        }
+
+        return $this->telegram->CurlPost('editMessageReplyMarkup',
+            $to_send
         );
     }
 

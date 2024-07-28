@@ -1,10 +1,20 @@
 <?php
 /**
- * Created by Maatify.dev
- * User: Maatify.dev
- * Date: 2023-07-19
- * Time: 8:05 AM
- * https://www.Maatify.dev
+ * @PHP       Version >= 8.0
+ * @Liberary  TelegramBot
+ * @Project   TelegramBot
+ * @copyright ©2024 Maatify.dev
+ * @see       https://www.maatify.dev Visit Maatify.dev
+ * @link      https://github.com/Maatify/TelegramBot View project on GitHub
+ * @since     2023-07-19 8:05 AM
+ * @author    Mohamed Abdulalim (megyptm) <mohamed@maatify.dev>
+ * @Maatify   TelegramBot :: TelegramUpdateForward
+ * @note      This Project using for Call Telegram API
+ *
+ * This program is distributed in the hope that it will be useful - WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE.
+ *
  */
 
 namespace Maatify\TelegramBot\Update;

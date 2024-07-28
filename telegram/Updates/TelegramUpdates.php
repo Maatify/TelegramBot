@@ -1,21 +1,15 @@
 <?php
 /**
- * Created by Maatify.dev
- * User: Maatify.dev
- * Date: 2023-07-15
- * Time: 7:29 AM
- * https://www.Maatify.dev
- */
-
-/**
- * @PHP Version >= 8.0
+ * @PHP       Version >= 8.0
+ * @Liberary  TelegramBot
  * @Project   TelegramBot
- * @see https://www.maatify.dev Visit Maatify.dev
- * @link https://github.com/Maatify/TelegramBot View project on GitHub
- *
+ * @copyright ©2024 Maatify.dev
+ * @see       https://www.maatify.dev Visit Maatify.dev
+ * @link      https://github.com/Maatify/TelegramBot View project on GitHub
+ * @since     2023-07-15 7:29 AM
  * @author    Mohamed Abdulalim (megyptm) <mohamed@maatify.dev>
- * @copyright ©2023 Maatify.dev
- * @note    This Project using for Call Telegram API
+ * @Maatify   TelegramBot :: TelegramUpdateTrait
+ * @note      This Project using for Call Telegram API
  *
  * This program is distributed in the hope that it will be useful - WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
@@ -27,7 +21,7 @@ namespace Maatify\TelegramBot\Updates;
 
 use Exception;
 use Maatify\Logger\Logger;
-use Maatify\TelegramBot\Request;
+use Maatify\TelegramBot\TelegramRequest;
 use Maatify\TelegramBot\Update\TelegramUpdate;
 use Maatify\TelegramBot\Update\TelegramUpdateMessage;
 
@@ -35,7 +29,7 @@ class TelegramUpdates
 {
     protected array $updates = [];
 
-    protected Request $telegram;
+    protected TelegramRequest $telegram;
     private static self $instance;
     private TelegramUpdate $update;
     public TelegramUpdateMessage $message;
@@ -43,7 +37,7 @@ class TelegramUpdates
     /**
      * @throws Exception
      */
-    public static function obj(Request $telegram): self
+    public static function obj(TelegramRequest $telegram): self
     {
         if (empty(self::$instance)) {
             self::$instance = new self($telegram);
@@ -51,7 +45,7 @@ class TelegramUpdates
         return self::$instance;
     }
 
-    public function __construct(Request $telegram)
+    public function __construct(TelegramRequest $telegram)
     {
         $this->telegram = $telegram;
     }

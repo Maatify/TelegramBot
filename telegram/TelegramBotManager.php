@@ -1,27 +1,22 @@
 <?php
 /**
- * Created by Maatify.dev
- * User: Maatify.dev
- * Date: 2023-07-15
- * Time: 7:41 AM
- * https://www.Maatify.dev
- */
-
-/**
- * @PHP Version >= 8.0
- * @Liberary    TelegramBot
- * @see https://www.maatify.dev Visit Maatify.dev
- * @link https://github.com/Maatify/TelegramBot View project on GitHub
- *
+ * @PHP       Version >= 8.0
+ * @Liberary  TelegramBot
+ * @Project   TelegramBot
+ * @copyright ©2024 Maatify.dev
+ * @see       https://www.maatify.dev Visit Maatify.dev
+ * @link      https://github.com/Maatify/TelegramBot View project on GitHub
+ * @since     2023-07-15 7:41 AM
  * @author    Mohamed Abdulalim (megyptm) <mohamed@maatify.dev>
- * @copyright ©2023 Maatify.dev
- * @note    This Project using for Call Telegram API
+ * @Maatify   TelegramBot :: TelegramBotManager
+ * @note      This Project using for Call Telegram API
  *
  * This program is distributed in the hope that it will be useful - WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
  * FITNESS FOR A PARTICULAR PURPOSE.
  *
  */
+
 namespace Maatify\TelegramBot;
 
 use Exception;
@@ -29,19 +24,19 @@ use Maatify\TelegramBot\Chat\TelegramChat;
 use Maatify\TelegramBot\Update\TelegramUpdate;
 use Maatify\TelegramBot\Updates\TelegramUpdates;
 use Maatify\TelegramBot\Updates\TelegramUpdatesGroup;
-use Maatify\TelegramBot\Webhook\TelegramWebhook;
+use Maatify\TelegramBot\Webhook\TelegramWebhookOptions;
 
 class TelegramBotManager
 {
     private static self $instance;
-    private Request $telegram;
+    public TelegramRequest $telegram;
 
     public TelegramMethods $methods;
     public TelegramUpdates $updates;
-    private TelegramUpdatesGroup $updates_grouped;
-    private TelegramChat $chat;
-    private TelegramWebhook $webhook;
-    private TelegramSender $sender;
+    public TelegramUpdatesGroup $updates_grouped;
+    public TelegramChat $chat;
+    public TelegramWebhookOptions $webhook;
+    public TelegramSender $sender;
     private TelegramFile $downloader;
 
     /**
@@ -61,12 +56,12 @@ class TelegramBotManager
      */
     public function __construct(string $api_key)
     {
-        $this->telegram = Request::obj($api_key);
+        $this->telegram = TelegramRequest::obj($api_key);
         $this->methods = TelegramMethods::obj($this->telegram);
         $this->updates = TelegramUpdates::obj($this->telegram);
         $this->updates_grouped = TelegramUpdatesGroup::obj($this->telegram);
         $this->chat = TelegramChat::obj($this->telegram);
-        $this->webhook = TelegramWebhook::obj($this->telegram);
+        $this->webhook = TelegramWebhookOptions::obj($this->telegram);
         $this->sender = TelegramSender::obj($this->telegram);
         $this->downloader = TelegramFile::obj($this->telegram);
     }
@@ -131,7 +126,7 @@ class TelegramBotManager
         return $this->updates_grouped;
     }
 
-    public function Webhook(): TelegramWebhook
+    public function Webhook(): TelegramWebhookOptions
     {
         return $this->webhook;
     }
