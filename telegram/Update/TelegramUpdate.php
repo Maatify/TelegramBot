@@ -54,7 +54,7 @@ class TelegramUpdate extends TelegramUpdateGetter
         $this->from = TelegramUpdateFrom::obj(!empty($this->message->Get('from')) ? $this->message->Get('from') : []);
         $this->chat = TelegramUpdateChat::obj(!empty($this->message->Get('chat')) ? $this->message->Get('chat') : []);
         $this->text = $this->message->Get('text') ?? '';
-        $this->date = $this->message->Get('date') ?? '';
+        $this->date = $this->message->Get('date') ?? 0;
         if(empty($this->reply_to_message)) {
             $this->reply_to_message = TelegramUpdateReplyToMessage::obj($this->message->Get('reply_to_message') ?: []);
         }
