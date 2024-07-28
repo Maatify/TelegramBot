@@ -58,8 +58,8 @@ class TelegramInlineKeyboardMarkup
             $keyboard[] = $keyboardRow;
         }
 
-//        return json_encode(['inline_keyboard' => $keyboard]);
-        return $keyboard;
+        return json_encode(['inline_keyboard' => $keyboard]);
+//        return $keyboard;
     }
 
     /**
