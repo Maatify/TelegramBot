@@ -1,6 +1,6 @@
 {  "name": "maatify/telegram-bot",
   "description": "Unofficial Telegram SDK for PHP it's library for maatify.dev Telegram Bot handler, known by our team",
-  "version": "1.6.008",
+  "version": "1.6.009",
   "type": "library",
   "keywords": [
     "PHP",

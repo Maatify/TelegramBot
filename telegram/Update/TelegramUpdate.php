@@ -50,11 +50,11 @@ class TelegramUpdate extends TelegramUpdateGetter
     {
         parent::__construct($update);
         $this->update_id = $update['update_id'];
-        $this->message = TelegramUpdateMessage::obj($update['message']);
-        $this->from = TelegramUpdateFrom::obj($this->message->Get('from'));
-        $this->chat = TelegramUpdateChat::obj($this->message->Get('chat'));
-        $this->text = $this->message->Get('text');
-        $this->date = $this->message->Get('date');
+        $this->message = TelegramUpdateMessage::obj($update['message'] ?? '');
+        $this->from = TelegramUpdateFrom::obj($this->message->Get('from') ?? '');
+        $this->chat = TelegramUpdateChat::obj($this->message->Get('chat') ?? '');
+        $this->text = $this->message->Get('text') ?? '';
+        $this->date = $this->message->Get('date') ?? '';
         if(empty($this->reply_to_message)) {
             $this->reply_to_message = TelegramUpdateReplyToMessage::obj($this->message->Get('reply_to_message') ?: []);
         }
