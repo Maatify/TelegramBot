@@ -58,9 +58,12 @@ class TelegramSender
             $to_send
         );
     }
-    public function editMessageReplyMarkup(int $chat_id, int $reply_to_message_id = 0, array $keyboard = [])
+    public function editMessageReplyMarkup(int $chat_id, string $text = '', int $reply_to_message_id = 0, array $keyboard = [])
     {
         $to_send['chat_id'] = $chat_id;
+        if(!empty($text)) {
+            $to_send['text'] = $text;
+        }
         if(!empty($reply_to_message_id)) {
             $to_send['message_id'] = $reply_to_message_id;
         }
