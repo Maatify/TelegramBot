@@ -72,7 +72,7 @@ class TelegramSender
             $to_send
         );
     }
-    public function editMessageText(int $chat_id, string $text = '', int $reply_to_message_id = 0)
+    public function editMessageText(int $chat_id, string $text = '', int $reply_to_message_id = 0, array $keyboard = [])
     {
         $to_send['chat_id'] = $chat_id;
         if(!empty($text)) {
@@ -80,6 +80,9 @@ class TelegramSender
         }
         if(!empty($reply_to_message_id)) {
             $to_send['message_id'] = $reply_to_message_id;
+        }
+        if(!empty($keyboard)) {
+            $to_send['reply_markup'] = TelegramInlineKeyboardMarkup::obj()->createInlineKeyboard($keyboard);
         }
         return $this->telegram->CurlPost('editMessageText',
             $to_send
