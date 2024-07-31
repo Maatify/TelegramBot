@@ -34,6 +34,7 @@ class TelegramWebhook extends Webhook
     public ?string $text;
     public TelegramWebhookMessage $message;
     public TelegramWebhookCallback $callback;
+    public ?string $update_type;
 
     public static function obj(array $payload, array $headers, string $api_key): self
     {
@@ -163,6 +164,7 @@ class TelegramWebhook extends Webhook
 
         foreach ($updateTypes as $type) {
             if (isset($this->payload[$type])) {
+                $this->update_type = $this->payload[$type];
                 return $type;
             }
         }
