@@ -91,17 +91,19 @@ class TelegramSender
 
     public function SendMessageWithKeyboardMarkup(int $chat_id, string $message, int $reply_to_message_id = 0, array $keyboard = [])
     {
+        $to_send['chat_id'] = $chat_id;
+        $to_send['text'] = $message;
+
+        if(!empty($reply_to_message_id)) {
+            $to_send['message_id'] = $reply_to_message_id;
+        }
+
         if (! empty($keyboard)) {
-            $keyboard = TelegramInlineKeyboardMarkup::obj()->createInlineKeyboard($keyboard);
+            $to_send['reply_markup'] = TelegramInlineKeyboardMarkup::obj()->createInlineKeyboard($keyboard);
         }
 
         return $this->telegram->CurlPost('sendMessage',
-            [
-                'chat_id'             => $chat_id,
-                'text'                => $message,
-                'reply_to_message_id' => $reply_to_message_id,
-                'reply_markup'        => $keyboard,
-            ]
+            $to_send
         );
     }
 
