@@ -109,21 +109,21 @@ class TelegramRequest
                 'error' => "(err-" . __METHOD__ . ") cURL Error ($curl_errno): $curl_error",
                 'params' => $this->params,
                 'url' => $this->url
-            ], 'telegram_failed_' . GeneralFunctions::CurrentMicroTimeStamp());
+            ], 'telegram_curl/telegram_failed_' . GeneralFunctions::CurrentMicroTimeStamp());
         } else {
             if ($resultArray = json_decode($result, true)) {
                 Logger::RecordLog([
                     'success' => $resultArray,
                     'params' => $this->params,
                     'url' => $this->url
-                ], 'success_' . GeneralFunctions::CurrentMicroTimeStamp());
+                ], 'telegram_curl/success_' . GeneralFunctions::CurrentMicroTimeStamp());
                 return $resultArray;
             } else {
                 Logger::RecordLog([
                     'error' => ($httpCode != 200) ? "Error header response " . $httpCode : "There is no response from server (err-" . __METHOD__ . ")",
                     'params' => $this->params,
                     'url' => $this->url
-                ], 'telegram_failed_' . GeneralFunctions::CurrentMicroTimeStamp());
+                ], 'telegram_curl/telegram_failed_' . GeneralFunctions::CurrentMicroTimeStamp());
             }
         }
         return [];

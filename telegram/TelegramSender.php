@@ -139,6 +139,32 @@ class TelegramSender
         return $this->telegram->CurlPost('copyMessage',
             [
                 'from_chat_id' => $from_chat_id, // from chat id
+                'message_id'   => $message_id,   // message to forward
+                'chat_id'      => $chat_id,      // target chat id
+            ],
+        );
+    }
+
+    public function CopyAndDeleteAndGetText(int $chat_id, string $from_chat_id, int $message_id)
+    {
+        $copied = $this->CopyMessage($chat_id, $from_chat_id, $message_id);
+        if (empty($copied['ok'])) {
+            return '';
+        }else{
+            $copiedMessageId = $copied['result']['message_id'] ?? 0;
+        }
+        if(!empty($copiedMessageId)){
+            $this->deleteMessage($chat_id, $copiedMessageId);
+        }
+
+        return $copied['result']['text'] ?? '';
+
+    }
+
+    public function deleteMessage(int $chat_id, int $message_id)
+    {
+        return $this->telegram->CurlPost('deleteMessage',
+            [
                 'chat_id'      => $chat_id,      // target chat id
                 'message_id'   => $message_id,   // message to forward
             ],
