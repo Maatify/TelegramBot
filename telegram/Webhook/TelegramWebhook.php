@@ -164,7 +164,7 @@ class TelegramWebhook extends Webhook
 
         foreach ($updateTypes as $type) {
             if (isset($this->payload[$type])) {
-                $this->update_type = $this->payload[$type];
+                $this->update_type = $type;
                 return $type;
             }
         }
