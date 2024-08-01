@@ -54,7 +54,7 @@ class TelegramChat
 
                 return $this;
             } else {
-                Logger::RecordLog($chat, 'telegram_failed');
+                Logger::RecordLog($chat, 'telegram/get_chat/telegram_failed');
                 @throw new Exception('result not ok');
             }
         }

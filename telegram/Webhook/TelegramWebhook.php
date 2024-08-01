@@ -92,7 +92,7 @@ class TelegramWebhook extends Webhook
         $logEntry['time'] = date('Y-m-d H:i:s');
         $logEntry['type'] = $type;
         $logEntry['data'] = $data;
-        Logger::RecordLog($logEntry, 'telegram_webhook/telegram_webhook_log'. GeneralFunctions::CurrentMicroTimeStamp());
+        Logger::RecordLog($logEntry, 'telegram/webhook/telegram_webhook_log'. GeneralFunctions::CurrentMicroTimeStamp());
     }
 
     /**

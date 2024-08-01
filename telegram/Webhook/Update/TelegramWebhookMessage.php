@@ -52,7 +52,7 @@ class TelegramWebhookMessage
 
     public function preload(array $message): self
     {
-        Logger::RecordLog($message, 'message/' . intval(microtime(true) * 1000));
+        Logger::RecordLog($message, 'telegram/webhook/message/' . intval(microtime(true) * 1000));
         $this->message_id = isset($message['message_id']) ? (int)$message['message_id'] : null;
         $this->date = isset($message['date']) ? (int)$message['date'] : null;
         $this->text = isset($message['text']) ? (string)$message['text'] : null;

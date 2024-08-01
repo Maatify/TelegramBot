@@ -40,8 +40,10 @@ class TelegramRequest
         if (empty(self::$instance)) {
             self::$instance = new self($api_key);
         }
+
         return self::$instance;
     }
+
     public function __construct(string $api_key)
     {
         $this->api_url = $this->main_url . $api_key . '/';
@@ -68,8 +70,9 @@ class TelegramRequest
         curl_setopt($this->ch, CURLOPT_POST, 1);
         curl_setopt($this->ch, CURLOPT_POSTFIELDS, $params);
         curl_setopt($this->ch, CURLOPT_HTTPHEADER, array(
-                "Content-Type: multipart/form-data",
+            "Content-Type: multipart/form-data",
         ));
+
         return $this->call();
     }
 
@@ -82,6 +85,7 @@ class TelegramRequest
         curl_setopt($this->ch, CURLOPT_HTTPHEADER, array(
             'Content-Type: application/json',
         ));
+
         return $this->call();
     }
 
@@ -93,10 +97,12 @@ class TelegramRequest
         curl_setopt($this->ch, CURLOPT_HTTPHEADER, array(
             'Content-Type: application/json',
         ));
+
         return $this->call();
     }
 
-    private function call(){
+    private function call()
+    {
         curl_setopt($this->ch, CURLOPT_URL, $this->url);
 
         $result = curl_exec($this->ch);
@@ -105,27 +111,40 @@ class TelegramRequest
         $curl_error = curl_error($this->ch);
         curl_close($this->ch);
         if ($curl_errno > 0) {
-            Logger::RecordLog([
-                'error' => "(err-" . __METHOD__ . ") cURL Error ($curl_errno): $curl_error",
-                'params' => $this->params,
-                'url' => $this->url
-            ], 'telegram_curl/telegram_failed_' . GeneralFunctions::CurrentMicroTimeStamp());
+            $this->logError("(err-" . __METHOD__ . ") cURL Error ($curl_errno): $curl_error");
         } else {
             if ($resultArray = json_decode($result, true)) {
-                Logger::RecordLog([
-                    'success' => $resultArray,
-                    'params' => $this->params,
-                    'url' => $this->url
-                ], 'telegram_curl/success_' . GeneralFunctions::CurrentMicroTimeStamp());
+                $this->logSuccess($resultArray);
+
                 return $resultArray;
             } else {
-                Logger::RecordLog([
-                    'error' => ($httpCode != 200) ? "Error header response " . $httpCode : "There is no response from server (err-" . __METHOD__ . ")",
-                    'params' => $this->params,
-                    'url' => $this->url
-                ], 'telegram_curl/telegram_failed_' . GeneralFunctions::CurrentMicroTimeStamp());
+                $this->logError(($httpCode != 200) ? "Error header response " . $httpCode : "There is no response from server (err-" . __METHOD__ . ")");
             }
         }
+
         return [];
+    }
+
+    private function logSuccess(array $result): void
+    {
+        $this->log('success', success: $result);
+    }
+
+    private function logError(string $message): void
+    {
+        $this->log('failed', error_details: $message);
+    }
+
+    private function log(string $file_name, string $error_details = '', array $success = []): void
+    {
+        if (! empty($error_details)) {
+            $log['error'] = $error_details;
+        }
+        if (! empty($success)) {
+            $log['success'] = $success;
+        }
+        $log['params'] = $this->params;
+        $log['url'] = $this->url;
+        Logger::RecordLog($log, 'telegram/curl/telegram_' . $file_name . '_' . GeneralFunctions::CurrentMicroTimeStamp());
     }
 }
