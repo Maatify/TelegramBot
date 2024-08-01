@@ -54,12 +54,12 @@ class TelegramWebhookOptions
 
     public function WebhookInfo()
     {
-        return $this->telegram->CurlGet('getWebhookInfo');
+        return $this->telegram->curlGet('getWebhookInfo');
     }
 
     public function DeleteWebhook()
     {
-        return $this->telegram->CurlGet('deleteWebhook');
+        return $this->telegram->curlGet('deleteWebhook');
     }
 
 }

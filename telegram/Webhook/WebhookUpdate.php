@@ -35,7 +35,7 @@ class WebhookUpdate
         $this->update = TelegramUpdate::obj($_POST);
     }
 
-    public function Update(): TelegramUpdate
+    public function update(): TelegramUpdate
     {
         return $this->update;
     }

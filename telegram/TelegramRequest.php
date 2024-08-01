@@ -56,12 +56,12 @@ class TelegramRequest
         curl_setopt($this->ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
     }
 
-    public function CurlGetFile($file_path): string
+    public function curlGetFile($file_path): string
     {
         return $this->url = $this->api_file_url . $file_path;
     }
 
-    public function CurlFilePostFile(string $method, array $params)
+    public function curlFilePostFile(string $method, array $params)
     {
         $this->params = $params;
         $this->url = $this->api_url . $method;
@@ -70,10 +70,10 @@ class TelegramRequest
         curl_setopt($this->ch, CURLOPT_HTTPHEADER, array(
                 "Content-Type: multipart/form-data",
         ));
-        return $this->Call();
+        return $this->call();
     }
 
-    public function CurlPost(string $method, array $params)
+    public function curlPost(string $method, array $params)
     {
         $this->url = $this->api_url . $method;
         $this->params = $params;
@@ -82,10 +82,10 @@ class TelegramRequest
         curl_setopt($this->ch, CURLOPT_HTTPHEADER, array(
             'Content-Type: application/json',
         ));
-        return $this->Call();
+        return $this->call();
     }
 
-    public function CurlGet(string $method)
+    public function curlGet(string $method)
     {
         $this->url = $this->api_url . $method;
         $this->params = [];
@@ -93,10 +93,10 @@ class TelegramRequest
         curl_setopt($this->ch, CURLOPT_HTTPHEADER, array(
             'Content-Type: application/json',
         ));
-        return $this->Call();
+        return $this->call();
     }
 
-    private function Call(){
+    private function call(){
         curl_setopt($this->ch, CURLOPT_URL, $this->url);
 
         $result = curl_exec($this->ch);

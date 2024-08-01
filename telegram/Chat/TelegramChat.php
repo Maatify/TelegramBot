@@ -48,7 +48,7 @@ class TelegramChat
      */
     public function GetChat(int $chat_id): static
     {
-        if ($chat = $this->telegram->CurlPost('getChat', ['chat_id' => $chat_id])) {
+        if ($chat = $this->telegram->curlPost('getChat', ['chat_id' => $chat_id])) {
             if (! empty($chat['ok']) && ! empty($chat['result'])) {
                 $this->getter = $chat['result'];
 

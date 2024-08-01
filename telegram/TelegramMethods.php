@@ -68,7 +68,7 @@ class TelegramMethods
      * @throws Exception
      */
     private function HandleResponse(string $method){
-        if($me = $this->telegram->CurlGet($method)){
+        if($me = $this->telegram->curlGet($method)){
             if(!empty($me['ok']) && !empty($me['result'])){
                 return $me['result'];
             }

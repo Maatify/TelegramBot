@@ -55,7 +55,7 @@ class TelegramUpdates
      */
     protected function Updates(): void
     {
-        if($updates = $this->telegram->CurlGet('getUpdates')){
+        if($updates = $this->telegram->curlGet('getUpdates')){
             if(!empty($updates['ok']) && !empty($updates['result'])){
                 $this->updates = $updates['result'];
                 return;

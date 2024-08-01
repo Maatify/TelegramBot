@@ -43,7 +43,7 @@ class TelegramSender
         $this->action = TelegramSendAction::obj($telegram);
     }
 
-    public function SendMessage(int $chat_id, string $text, int $reply_to_message_id = 0, array $keyboard = [], $parseMode = null)
+    public function sendMessage(int $chat_id, string $text, int $reply_to_message_id = 0, array $keyboard = [], $parseMode = null)
     {
         $to_send['chat_id'] = $chat_id;
         $to_send['text'] = $text;
@@ -58,7 +58,7 @@ class TelegramSender
             $to_send['parse_mode'] = $parseMode;
         }
 
-        return $this->telegram->CurlPost('sendMessage',
+        return $this->telegram->curlPost('sendMessage',
             $to_send
         );
     }
@@ -76,7 +76,7 @@ class TelegramSender
             $to_send['parse_mode'] = $parseMode;
         }
 
-        return $this->telegram->CurlPost('editMessageReplyMarkup',
+        return $this->telegram->curlPost('editMessageReplyMarkup',
             $to_send
         );
     }
@@ -96,12 +96,12 @@ class TelegramSender
         if (!empty($parseMode)) {
             $to_send['parse_mode'] = $parseMode;
         }
-        return $this->telegram->CurlPost('editMessageText',
+        return $this->telegram->curlPost('editMessageText',
             $to_send
         );
     }
 
-    public function SendMessageWithKeyboardMarkup(int $chat_id, string $message, int $reply_to_message_id = 0, array $keyboard = [], $parseMode = null)
+    public function sendMessageWithKeyboardMarkup(int $chat_id, string $message, int $reply_to_message_id = 0, array $keyboard = [], $parseMode = null)
     {
         $to_send['chat_id'] = $chat_id;
         $to_send['text'] = $message;
@@ -118,14 +118,14 @@ class TelegramSender
             $to_send['parse_mode'] = $parseMode;
         }
 
-        return $this->telegram->CurlPost('sendMessage',
+        return $this->telegram->curlPost('sendMessage',
             $to_send
         );
     }
 
-    public function ForwardMessage(int $chat_id, string $from_chat_id, int $message_id)
+    public function forwardMessage(int $chat_id, string $from_chat_id, int $message_id)
     {
-        return $this->telegram->CurlPost('forwardMessage',
+        return $this->telegram->curlPost('forwardMessage',
             [
                 'from_chat_id' => "$from_chat_id", // from chat id
                 'chat_id'      => "$chat_id",      // target chat id
@@ -134,9 +134,9 @@ class TelegramSender
         );
     }
 
-    public function CopyMessage(int $chat_id, string $from_chat_id, int $message_id)
+    public function copyMessage(int $chat_id, string $from_chat_id, int $message_id)
     {
-        return $this->telegram->CurlPost('copyMessage',
+        return $this->telegram->curlPost('copyMessage',
             [
                 'from_chat_id' => $from_chat_id, // from chat id
                 'message_id'   => $message_id,   // message to forward
@@ -145,25 +145,24 @@ class TelegramSender
         );
     }
 
-    public function CopyAndDeleteAndGetText(int $chat_id, string $from_chat_id, int $message_id)
+    public function forwardAndDeleteAndGetText(int $chat_id, string $from_chat_id, int $message_id)
     {
-        $copied = $this->CopyMessage($chat_id, $from_chat_id, $message_id);
-        if (empty($copied['ok'])) {
+        $forwarded = $this->forwardMessage($chat_id, $from_chat_id, $message_id);
+        if (empty($forwarded['ok'])) {
             return '';
         }else{
-            $copiedMessageId = $copied['result']['message_id'] ?? 0;
+            $forwardedMessageId = $forwarded['result']['message_id'] ?? 0;
         }
-        if(!empty($copiedMessageId)){
-            $this->deleteMessage($chat_id, $copiedMessageId);
+        if(!empty($forwardedMessageId)){
+            $this->deleteMessage($chat_id, $forwardedMessageId);
         }
 
-        return $copied['result']['text'] ?? '';
-
+        return $forwarded['result']['text'] ?? '';
     }
 
     public function deleteMessage(int $chat_id, int $message_id)
     {
-        return $this->telegram->CurlPost('deleteMessage',
+        return $this->telegram->curlPost('deleteMessage',
             [
                 'chat_id'      => $chat_id,      // target chat id
                 'message_id'   => $message_id,   // message to forward
@@ -171,7 +170,7 @@ class TelegramSender
         );
     }
 
-    private function SendFileValidation(string $file_or_url): CURLFile|string
+    private function sendFileValidation(string $file_or_url): CURLFile|string
     {
         if (file_exists($file_or_url)) {
             return curl_file_create($file_or_url);
@@ -180,68 +179,68 @@ class TelegramSender
         return $file_or_url;
     }
 
-    public function SendPhoto(int $chat_id, string $file_or_url, $reply_to_message_id = 0, string $caption = '', $has_spoiler = false)
+    public function sendPhoto(int $chat_id, string $file_or_url, $reply_to_message_id = 0, string $caption = '', $has_spoiler = false)
     {
-        return $this->telegram->CurlFilePostFile('sendPhoto', [
+        return $this->telegram->curlFilePostFile('sendPhoto', [
             'chat_id'             => $chat_id,
-            'photo'               => $this->SendFileValidation($file_or_url),
+            'photo'               => $this->sendFileValidation($file_or_url),
             'reply_to_message_id' => $reply_to_message_id,
             'caption'             => $caption,
             'has_spoiler'         => $has_spoiler,
         ]);
     }
 
-    public function SendAudio(int $chat_id, string $file_or_url, $reply_to_message_id = 0, string $caption = '', string $title = '')
+    public function sendAudio(int $chat_id, string $file_or_url, $reply_to_message_id = 0, string $caption = '', string $title = '')
     {
-        return $this->telegram->CurlFilePostFile('sendAudio', [
+        return $this->telegram->curlFilePostFile('sendAudio', [
             'chat_id'             => $chat_id,
-            'audio'               => $this->SendFileValidation($file_or_url),
+            'audio'               => $this->sendFileValidation($file_or_url),
             'reply_to_message_id' => $reply_to_message_id,
             'caption'             => $caption,
             'title'               => $title,
         ]);
     }
 
-    public function SendDocument(int $chat_id, string $file_or_url, $reply_to_message_id = 0, string $caption = '')
+    public function sendDocument(int $chat_id, string $file_or_url, $reply_to_message_id = 0, string $caption = '')
     {
-        return $this->telegram->CurlFilePostFile('sendDocument', [
+        return $this->telegram->curlFilePostFile('sendDocument', [
             'chat_id'             => $chat_id,
-            'document'            => $this->SendFileValidation($file_or_url),
+            'document'            => $this->sendFileValidation($file_or_url),
             'reply_to_message_id' => $reply_to_message_id,
             'caption'             => $caption,
         ]);
     }
 
-    public function SendVideo(int $chat_id, string $file_or_url, $reply_to_message_id = 0, string $caption = '')
+    public function sendVideo(int $chat_id, string $file_or_url, $reply_to_message_id = 0, string $caption = '')
     {
-        return $this->telegram->CurlFilePostFile('sendVideo', [
+        return $this->telegram->curlFilePostFile('sendVideo', [
             'chat_id'             => $chat_id,
-            'video'               => $this->SendFileValidation($file_or_url),
+            'video'               => $this->sendFileValidation($file_or_url),
             'reply_to_message_id' => $reply_to_message_id,
             'caption'             => $caption,
         ]);
     }
 
-    public function SendVoice(int $chat_id, string $file_or_url, $reply_to_message_id = 0, string $caption = '')
+    public function sendVoice(int $chat_id, string $file_or_url, $reply_to_message_id = 0, string $caption = '')
     {
-        return $this->telegram->CurlFilePostFile('sendVoice', [
+        return $this->telegram->curlFilePostFile('sendVoice', [
             'chat_id'             => $chat_id,
-            'voice'               => $this->SendFileValidation($file_or_url),
+            'voice'               => $this->sendFileValidation($file_or_url),
             'reply_to_message_id' => $reply_to_message_id,
             'caption'             => $caption,
         ]);
     }
 
-    public function SendVideoNote(int $chat_id, string $file_or_url, $reply_to_message_id = 0)
+    public function sendVideoNote(int $chat_id, string $file_or_url, $reply_to_message_id = 0)
     {
-        return $this->telegram->CurlFilePostFile('sendVideoNote', [
+        return $this->telegram->curlFilePostFile('sendVideoNote', [
             'chat_id'             => $chat_id,
-            'video_note'          => $this->SendFileValidation($file_or_url),
+            'video_note'          => $this->sendFileValidation($file_or_url),
             'reply_to_message_id' => $reply_to_message_id,
         ]);
     }
 
-    public function Action(): TelegramSendAction
+    public function action(): TelegramSendAction
     {
         return $this->action;
     }

@@ -73,6 +73,6 @@ class SetWebhook
         if(!empty($this->secret_token)){
             $params['secret_token'] = $this->secret_token;
         }
-        return $this->telegram->CurlPost('setWebhook', $params);
+        return $this->telegram->curlPost('setWebhook', $params);
     }
 }

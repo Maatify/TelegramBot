@@ -61,12 +61,12 @@ class TelegramFile
 
     private function GetUserProfilePhotos(int $user_id)
     {
-        return $this->telegram->CurlPost('getUserProfilePhotos', ['user_id' => $user_id]);
+        return $this->telegram->curlPost('getUserProfilePhotos', ['user_id' => $user_id]);
     }
 
     private function GetFile(string $file_id)
     {
-        return $this->telegram->CurlPost('getFile', ['file_id' => $file_id]);
+        return $this->telegram->curlPost('getFile', ['file_id' => $file_id]);
     }
 
     /**
@@ -74,7 +74,7 @@ class TelegramFile
      */
     private function SaveFile(string $file_path, int $user_id): void
     {
-        $file_url = $this->telegram->CurlGetFile($file_path);
+        $file_url = $this->telegram->curlGetFile($file_path);
         $file_type = strtolower(pathinfo($file_url, PATHINFO_EXTENSION));
         header('Content-Disposition: attachment;filename="user-' . $user_id . '-' . time() . '.' . $file_type . '"');
         $file = @fopen($file_url, "rb");

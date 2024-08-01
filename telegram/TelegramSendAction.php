@@ -37,64 +37,64 @@ class TelegramSendAction
     {
         $this->telegram = $telegram;
     }
-    public function Typing(int $chat_id): array
+    public function typing(int $chat_id): array
     {
-        return $this->SendChatAction($chat_id, TelegramActions::TYPING);
+        return $this->sendChatAction($chat_id, TelegramActions::TYPING);
     }
 
-    public function UploadPhoto(int $chat_id): array
+    public function uploadPhoto(int $chat_id): array
     {
-        return $this->SendChatAction($chat_id, TelegramActions::UPLOAD_PHOTO);
+        return $this->sendChatAction($chat_id, TelegramActions::UPLOAD_PHOTO);
     }
 
-    public function RecordVideo(int $chat_id): array
+    public function recordVideo(int $chat_id): array
     {
-        return $this->SendChatAction($chat_id, TelegramActions::RECORD_VIDEO);
+        return $this->sendChatAction($chat_id, TelegramActions::RECORD_VIDEO);
     }
 
-    public function UploadVideo(int $chat_id): array
+    public function uploadVideo(int $chat_id): array
     {
-        return $this->SendChatAction($chat_id, TelegramActions::UPLOAD_VIDEO);
+        return $this->sendChatAction($chat_id, TelegramActions::UPLOAD_VIDEO);
     }
 
-    public function RecordVoice(int $chat_id): array
+    public function recordVoice(int $chat_id): array
     {
-        return $this->SendChatAction($chat_id, TelegramActions::RECORD_VOICE);
+        return $this->sendChatAction($chat_id, TelegramActions::RECORD_VOICE);
     }
 
-    public function UploadVoice(int $chat_id): array
+    public function uploadVoice(int $chat_id): array
     {
-        return $this->SendChatAction($chat_id, TelegramActions::UPLOAD_VOICE);
+        return $this->sendChatAction($chat_id, TelegramActions::UPLOAD_VOICE);
     }
 
-    public function UploadDocument(int $chat_id): array
+    public function uploadDocument(int $chat_id): array
     {
-        return $this->SendChatAction($chat_id, TelegramActions::UPLOAD_DOCUMENT);
+        return $this->sendChatAction($chat_id, TelegramActions::UPLOAD_DOCUMENT);
     }
 
-    public function ChooseSticker(int $chat_id): array
+    public function chooseSticker(int $chat_id): array
     {
-        return $this->SendChatAction($chat_id, TelegramActions::CHOOSE_STICKER);
+        return $this->sendChatAction($chat_id, TelegramActions::CHOOSE_STICKER);
     }
 
-    public function FindLocation(int $chat_id): array
+    public function findLocation(int $chat_id): array
     {
-        return $this->SendChatAction($chat_id, TelegramActions::FIND_LOCATION);
+        return $this->sendChatAction($chat_id, TelegramActions::FIND_LOCATION);
     }
 
-    public function RecordVideoNote(int $chat_id): array
+    public function recordVideoNote(int $chat_id): array
     {
-        return $this->SendChatAction($chat_id, TelegramActions::RECORD_VIDEO_NOTE);
+        return $this->sendChatAction($chat_id, TelegramActions::RECORD_VIDEO_NOTE);
     }
 
-    public function UploadVideoNote(int $chat_id): array
+    public function uploadVideoNote(int $chat_id): array
     {
-        return $this->SendChatAction($chat_id, TelegramActions::UPLOAD_VIDEO_NOTE);
+        return $this->sendChatAction($chat_id, TelegramActions::UPLOAD_VIDEO_NOTE);
     }
 
-    private function SendChatAction(int $chat_id, string $action): array
+    private function sendChatAction(int $chat_id, string $action): array
     {
-        return $this->telegram->CurlPost('sendChatAction', [
+        return $this->telegram->curlPost('sendChatAction', [
             'chat_id' => $chat_id,
             'action' => $action
         ]);

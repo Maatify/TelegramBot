@@ -33,6 +33,7 @@ print_r($info);
 
 ### Webhook update reader
 #### create php file for webhook url
+
 ```php
 <?php
 
@@ -40,7 +41,7 @@ use Maatify\TelegramBot\Webhook\WebhookUpdate;
 
 require __DIR__ . '/vendor/autoload.php';
 
-$update = (new WebhookUpdate())->Update();
+$update = (new WebhookUpdate())->update();
 $full_message = $update->GetMessage();
 
 // ================== return all of message ==================
