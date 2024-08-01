@@ -76,6 +76,7 @@ class TelegramWebhook extends Webhook
         $this->logEvent('callback_query', $this->callback);
         if($this->callback->data){
             $this->data = $this->callback->data;
+            $this->message = $this->callback->message;
             $this->message_id = $this->callback->message->message_id;
             $this->chat_id = $this->callback->message->chat->id;
         }
@@ -91,7 +92,7 @@ class TelegramWebhook extends Webhook
         $logEntry['time'] = date('Y-m-d H:i:s');
         $logEntry['type'] = $type;
         $logEntry['data'] = $data;
-        Logger::RecordLog($logEntry, 'telegram_webhook_log'. GeneralFunctions::CurrentMicroTimeStamp());
+        Logger::RecordLog($logEntry, 'telegram_webhook/telegram_webhook_log'. GeneralFunctions::CurrentMicroTimeStamp());
     }
 
     /**
