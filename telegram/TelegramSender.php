@@ -170,6 +170,37 @@ class TelegramSender
         );
     }
 
+    public function setChatCommand(int $chat_id, array $commands)
+    {
+        /*
+        // Command Example
+        $commands = [
+                        [
+                            'command' => 'start',
+                            'description' => '✅ Start Notification - فعل الإشعارات',
+                        ],
+                        [
+                            'command' => 'stop',
+                            'description' => '❌ Stop Notification - أوقف الإشعارات',
+                        ],
+
+                    ];
+        */
+
+        // Specify the scope for a specific chat
+        $scope = [
+            'type' => 'chat', // Options: 'default', 'all_private_chats', 'all_group_chats', 'chat'
+            'chat_id' => $chat_id, // Replace with the target chat ID
+        ];
+
+        return $this->telegram->curlPost('setChatCommand', [
+            $data = [
+                'commands' => json_encode($commands),
+                'scope' => json_encode($scope),
+            ]
+        ]);
+    }
+
     private function sendFileValidation(string $file_or_url): CURLFile|string
     {
         if (file_exists($file_or_url)) {
