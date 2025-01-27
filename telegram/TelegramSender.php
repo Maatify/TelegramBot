@@ -170,7 +170,7 @@ class TelegramSender
         );
     }
 
-    public function setChatCommand(int $chat_id, array $commands)
+    public function setChatCommands(int $chat_id, array $commands)
     {
         /*
         // Command Example
@@ -193,7 +193,7 @@ class TelegramSender
             'chat_id' => $chat_id, // Replace with the target chat ID
         ];
 
-        return $this->telegram->curlPost('setChatCommand', [
+        return $this->telegram->curlPost('setChatCommands', [
             $data = [
                 'commands' => json_encode($commands),
                 'scope' => json_encode($scope),
