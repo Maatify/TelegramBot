@@ -193,11 +193,9 @@ class TelegramSender
             'chat_id' => $chat_id, // Replace with the target chat ID
         ];
 
-        return $this->telegram->curlPost('setChatCommands', [
-            $data = [
-                'commands' => json_encode($commands),
-                'scope' => json_encode($scope),
-            ]
+        return $this->telegram->curlPost('setMyCommands', [
+            'commands' => json_encode($commands),
+            'scope' => json_encode($scope),
         ]);
     }
 
